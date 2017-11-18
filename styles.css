@@ -30,6 +30,7 @@ nav {
 }
 .nav-item:hover {
 	background-color: #FF8500;
+	text-decoration: underline;
 }
 
 body {
