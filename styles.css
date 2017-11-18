@@ -14,7 +14,8 @@
 	display: inline-block;
 }
 nav {
-	display: inline-block;	
+	display: inline-block;
+	vertical-align: text-top;
 }
 .nav-item {
 	margin-right: 15px;
