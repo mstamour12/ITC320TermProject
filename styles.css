@@ -9,10 +9,11 @@
 	display: inline-block;
 }
 .header-nav {
-	margin-top: 20px;
-        font-size: 18px;
         padding: 5px;
 	display: inline-block;
+}
+nav {
+	display: inline-block;	
 }
 .nav-item {
 	margin-right: 15px;
