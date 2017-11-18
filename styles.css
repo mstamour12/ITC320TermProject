@@ -1,5 +1,5 @@
 .header {
-	background-color: #FF9521;
+	background-color: #fb0;
 	height: 100px;
 	padding: 10px;
 }
@@ -15,7 +15,6 @@
 }
 .nav-item {
 	padding-right: 15px;
-    	color: #fff;
     	text-decoration: none;
 }
 
