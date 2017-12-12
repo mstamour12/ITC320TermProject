@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Customer Registration - Saint Amour Consulting</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<script>
+		var $ = function(id) { return document.getElementById(id); };
+
+		var reset = function(){
+			resetSpans();
+			$("date").value = "";
+			$("business").checked = true;
+			$("po").checked = true;
+			$("email").value = "";
+			$("email2").value = "";
+			$("first").value = "";
+			$("last").value = "";
+			$("phone").value = "";
+			$("st").value = "";
+			$("zip").value = "";
+		}
+
+		var resetSpans = function(){
+			$("dateError").innerHTML = "";
+			$("emailError").innerHTML = "";
+			$("email2Error").innerHTML = "";
+			$("firstError").innerHTML = "";
+			$("lastError").innerHTML = "";
+			$("phoneError").innerHTML = "";
+			$("stError").innerHTML = "";
+			$("zipError").innerHTML = "";
+		}
+
+		var submit = function(){
+			resetSpans();
+
+			var allGood = true;
+
+			var dateRegEx = /^[01]?\d\/(0?\d|[12]\d|3[01])\/(2\d)?\d{2}$/;
+			if(dateRegEx.test($("date").value)){
+				sessionStorage.date = $("date").value;
+			}
+			else{
+				allGood = false;
+				$("dateError").innerHTML = "*MM/DD/YYYY*";
+			}
+
+			var emailRegEx = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum|edu)\b/
+			if(emailRegEx.test($("email").value)){
+				sessionStorage.email = $("email").value;
+			}
+			else{
+				allGood = false;
+				$("emailError").innerHTML = "*Enter a valid email*";
+			}
+
+			if(!($("email").value === $("email2").value)){
+				allGood = false;
+				$("email2Error").innerHTML = "*Emails must match*";
+			}
+
+			if(!($("first").value == "")){
+				sessionStorage.first = $("first").value;
+			}
+			else{
+				allGood = false;
+				$("firstError").innerHTML = "*Please enter something*";
+			}
+
+			if(!($("last").value == "")){
+				sessionStorage.last = $("last").value;
+			}
+			else{
+				allGood = false;
+				$("lastError").innerHTML = "*Please enter something*";
+			}
+
+			var phoneRegEx = /^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$/;
+			if(phoneRegEx.test($("phone").value)){
+				sessionStorage.phone = $("phone").value;
+			}
+			else{
+				allGood = false;
+				$("phoneError").innerHTML = "*Enter a valid phone number*";
+			}
+
+			var stArray = ["AL", "AK", "AS", "AZ", "AR", "CA", "CO", "CT", "DE", "DC", "FM", "FL", "GA", "GU", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MH", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "MP", "OH", "OK", "OR", "PW", "PA", "PR", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VI", "VA", "WA", "WV", "WI", "WY"];
+			if(!(stArray.indexOf($("st").value.toUpperCase()) === -1)){
+				sessionStorage.st = $("st").value.toUpperCase();
+			}
+			else{
+				allGood = false;
+				$("stError").innerHTML = "*Enter a valid state code*";
+			}
+
+			var zipRegEx = /^\d{5}$/;
+			if(zipRegEx.test($("zip").value)){
+				sessionStorage.zip = $("zip").value;
+			}
+			else{
+				allGood = false;
+				$("zipError").innerHTML = "*Please enter a valid zip code*";
+			}
+
+			var customerTypes = document.getElementsByName("customer");
+			for(var i = 0; i < customerTypes.length; i++){
+				if(customerTypes[i].checked === true){
+					sessionStorage.customer = customerTypes[i].value;
+				}
+			}
+
+			var paymentTypes = document.getElementsByName("payment");
+			for(var i = 0; i < paymentTypes.length; i++){
+				if(paymentTypes[i].checked === true){
+					sessionStorage.payment = paymentTypes[i].value;
+				}
+			}
+
+			if(allGood){
+				window.location.replace("confirmation.html");
+			}
+
+		}
+
+		window.onload = function(){
+			$("submit").onclick = submit;
+			$("reset").onclick = reset;
+		}
+	</script>
+</head>
+<body>
+	<div id="header">
+		<div class="clearfix">
+			<div class="logo">
+				<a href="index.html"><img src="images/logo3.png" height="104"></a>
+			</div>
+			<ul class="navigation">
+				<li>
+					<a href="index.html">Home</a>
+				</li>
+				<li>
+					<a href="about.html">About</a>
+				</li>
+				<li class="active">
+					<a href="registration.html">Customer Registration</a>
+				</li>
+				<li>
+					<a href="calendar.html">Calendar</a>
+				</li>
+				<li>
+					<a href="products.html">Products</a>
+					<div>
+						<a href="order.html">Order Now!</a>
+					</div>
+				</li>
+				<li>
+					<a href="admin.html">Admin</a>
+				</li>
+				<li>
+					<a href="calculator.html">Calculator</a>
+				</li>
+				<li>
+					<a href="references.html">References</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="contents">
+		<div class="clearfix">
+			<div class="main">
+				<h1>Customer Registration</h1>
+				<form action="response.html" method="get"
+			    	name="reservation_form" id="reservation_form">
+			         <fieldset>
+			        	<legend>General Information</legend>
+			        	<label for="date">Date:</label>
+			        	<input type="text" name="date" id="date"><span id="dateError"></span><br>
+								<label>Customer type:</label>
+									<input type="radio" name="customer" id="business" value="Business" checked>Business:
+									<input type="radio" name="customer" id="personal" value="Personal">Personal:
+									<input type="radio" name="customer" id="government" value="Government">Government:<br>
+								<label>Payment type:</label>
+									<input type="radio" name="payment" id="po" value="PO" checked>PO:
+									<input type="radio" name="payment" id="cash" value="Cash">Cash:
+									<input type="radio" name="payment" id="credit" value="Credit">Credit:
+			         </fieldset>
+			         <fieldset>
+			    			<legend>Customer Information</legend>
+			    			<label for="email">Email Address:</label>
+									<input type="text" name="email" id="email"><span id="emailError"></span><br>
+			        	<label for="email2">Re-enter Email Address:</label>
+			        		<input type="text" name="email2" id="email2"><span id="email2Error"></span><br>
+								<label for="first">First Name:</label>
+									<input type="text" name="first" id="first"><span id="firstError"></span><br>
+								<label for="last">Last Name:</label>
+									<input type="text" name="last" id="last"><span id="lastError"></span><br>
+								<label for="phone">Phone:</label>
+									<input type="text" name="phone" id="phone"><span id="phoneError"></span><br>
+								<label for="st">2-Character State Code:</label>
+									<input type="text" name="st" id="st"><span id="stError"></span><br>
+								<label for="zip">5-Digit Zip Code:</label>
+									<input type="text" name="zip" id="zip"><span id="zipError"></span><br>
+			         </fieldset>
+			         <input type="button" id="submit" value="Submit Request"><input type="button" id="reset" value="Reset"><br><br>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

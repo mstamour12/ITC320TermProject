@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Calendar - Saint Amour Consulting</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<script>
+	var $ = function (id) { return document.getElementById(id); };
+
+	var getMonthText = function(currentMonth) {
+	    if (currentMonth === 0) { return "January"; }
+	    else if (currentMonth === 1) { return "February"; }
+	    else if (currentMonth === 2) { return "March"; }
+	    else if (currentMonth === 3) { return "April"; }
+	    else if (currentMonth === 4) { return "May"; }
+	    else if (currentMonth === 5) { return "June"; }
+	    else if (currentMonth === 6) { return "July"; }
+	    else if (currentMonth === 7) { return "August"; }
+	    else if (currentMonth === 8) { return "September"; }
+	    else if (currentMonth === 9) { return "October"; }
+	    else if (currentMonth === 10) { return "November"; }
+	    else if (currentMonth === 11) { return "December"; }
+	};
+
+	var getLastDayofMonth = function(currentMonth) {
+	  var endOfMonth = new Date();
+
+	  endOfMonth.setMonth(currentMonth + 1);
+	  endOfMonth.setDate(0);
+
+	  return endOfMonth.getDate();
+	};
+
+	var showOrHideCoupon = function(){
+		if ($("hiddenCoupon").innerHTML === ""){
+			var showCoupon = "<br><br>Print this page or enter coupon code 10OFF at checkout to take an extra 10% off your order!";
+			showCoupon += "<br><a rel='nofollow' href='http://www.qrcode-generator.de' border='0' style='cursor:default'></a><img src='https://chart.googleapis.com/chart?cht=qr&chl=https%3A%2F%2Fgoo.gl%2Fmaps%2FNz8eWxGqAxm&chs=180x180&choe=UTF-8&chld=L|2' alt=''>";
+			$("hiddenCoupon").innerHTML = showCoupon;
+		}
+		else{
+			$("hiddenCoupon").innerHTML = "";
+		}
+	}
+
+	window.onload = function () {
+
+	  var today = new Date();
+
+	  $("month_year").innerHTML = getMonthText(today.getMonth()) + " " + today.getFullYear();
+	  today.setDate(1);
+
+	  var calText = "<tr>";
+
+	  //Handle blank spaces before the 1st of the month
+	  for(var i = 0; i < today.getDay(); i++){
+	    calText += "<td></td>";
+	  }
+
+	  //Write days from 1 to end of month
+	  for(var j = 1; j <= getLastDayofMonth(today.getMonth()); j++){
+	    today.setDate(j);
+
+	    if(!(today.getDay() % 7)){
+	      calText +="</tr><tr>";
+				calText += "<td>" + j + "*</td>";
+	    }
+			else{
+	    	calText += "<td>" + j + "</td>";
+			}
+	  }
+
+	  for(var k = 0; k < (6 - today.getDay()); k++){
+	    calText += "<td></td>";
+	  }
+
+	  calText += "</tr>";
+
+	  $("calendar").innerHTML += calText;
+	};
+	</script>
+</head>
+<body>
+	<div id="header">
+		<div class="clearfix">
+			<div class="logo">
+				<a href="index.html"><img src="images/logo3.png" height="104"></a>
+			</div>
+			<ul class="navigation">
+				<li>
+					<a href="index.html">Home</a>
+				</li>
+				<li>
+					<a href="about.html">About</a>
+				</li>
+				<li>
+					<a href="registration.html">Customer Registration</a>
+				</li>
+				<li class="active">
+					<a href="calendar.html">Calendar</a>
+				</li>
+				<li>
+					<a href="products.html">Products</a>
+					<div>
+						<a href="order.html">Order Now!</a>
+					</div>
+				</li>
+				<li>
+					<a href="admin.html">Admin</a>
+				</li>
+				<li>
+					<a href="calculator.html">Calculator</a>
+				</li>
+				<li>
+					<a href="references.html">References</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="contents">
+		<div class="clearfix">
+			<div class="main">
+				<h1>Calendar and Specials</h1>
+				<h2 id="month_year">&nbsp;</h2>
+
+        <table id="calendar">
+            <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+        </table>
+				<br>
+				<h2>*Orders Placed on Sundays receive an additional 5% off!*</h2>
+				<br>
+				<button type="button" id="coupon" onclick="return showOrHideCoupon();">Additional Coupon</button>
+				<span id="hiddenCoupon"></span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

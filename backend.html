@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Admin Backend - Saint Amour Consulting</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+	<script>
+		var $ = function (id) { return document.getElementById(id); };
+
+    var validate = function(){
+      var allGood = true;
+      var userPrice = $("price").value;
+
+      if($("item").value == ""){
+        allGood = false;
+        $("itemError").innerHTML = "Enter an item name";
+      }
+      else{
+        $("itemError").innerHTML = "";
+      }
+
+      if(userPrice.startsWith("$")){
+        userPrice = userPrice.substring(1);
+      }
+
+      if(userPrice == "" || isNaN(userPrice)){
+        allGood = false;
+        $("priceError").innerHTML = "Enter a valid, numerical price";
+      }
+      else{
+        $("priceError").innerHTML = "";
+      }
+
+      if($("quantity").value == "" || isNaN($("quantity").value)){
+        allGood = false;
+        $("quantityError").innerHTML = "Enter a valid, numerical quantity";
+      }
+      else{
+        $("quantityError").innerHTML = "";
+      }
+
+      if(allGood){
+        addData();
+        reset();
+      }
+
+    }
+
+    Storage.prototype.setObj = function(key, obj) {
+      return this.setItem(key, JSON.stringify(obj))
+    }
+
+    Storage.prototype.getObj = function(key) {
+      return JSON.parse(this.getItem(key))
+    }
+
+    var addData = function(){
+      var newItem = [3];
+      var userItem = $("item").value;
+      var userPrice = "$";
+      var userQuantity = $("quantity").value;
+
+      if($("price").value.startsWith("$")){
+        userPrice += parseFloat($("price").value.substring(1)).toFixed(2);
+      }
+      else{
+        userPrice += parseFloat($("price").value).toFixed(2);
+      }
+
+      newItem[0] = userItem;
+      newItem[1] = userPrice;
+      newItem[2] = userQuantity;
+      sessionStorage.setObj(sessionStorage.tableLength, newItem);
+      sessionStorage.tableLength++;
+      updateDisplay();
+    }
+
+    var updateDisplay = function(){
+      var finalDisplay = "<tr><th>Item</th><th>Price</th><th>Qty. on Hand</th></tr>";
+
+      for(var i = 0; i < sessionStorage.tableLength; i++){
+        var retrievedItem = sessionStorage.getObj(i);
+        finalDisplay += "<tr><td>" + retrievedItem[0] + "</td><td>" + retrievedItem[1] + "</td><td>" + retrievedItem[2] + "</td></tr>";
+      }
+
+      $("table").innerHTML = finalDisplay;
+    }
+
+    var reset = function(){
+      clearSpans();
+      $("item").value = "";
+      $("price").value = "";
+      $("quantity").value = "";
+    }
+
+    var clearSpans = function(){
+      $("itemError").value = "";
+      $("priceError").value = "";
+      $("quantityError").value = "";
+    }
+
+    window.onload = function(){
+      updateDisplay();
+      if(sessionStorage.getItem("tableLength") === null){
+        sessionStorage.tableLength = 0;
+      }
+    }
+
+	</script>
+</head>
+<body>
+	<div id="header">
+		<div class="clearfix">
+			<div class="logo">
+				<a href="index.html"><img src="images/logo3.png" height="104"></a>
+			</div>
+			<ul class="navigation">
+				<li>
+					<a href="index.html">Home</a>
+				</li>
+				<li>
+					<a href="about.html">About</a>
+				</li>
+				<li>
+					<a href="registration.html">Customer Registration</a>
+				</li>
+				<li>
+					<a href="calendar.html">Calendar</a>
+				</li>
+				<li>
+					<a href="products.html">Products</a>
+					<div>
+						<a href="order.html">Order Now!</a>
+					</div>
+				</li>
+				<li class="active">
+					<a href="admin.html">Admin</a>
+				</li>
+				<li>
+					<a href="calculator.html">Calculator</a>
+				</li>
+				<li>
+					<a href="references.html">References</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="contents">
+		<div class="clearfix">
+			<div class="main">
+				<h1>Admin Backend</h1>
+        <h2>Add Item</h2>
+        <form onsubmit="validate(); return false;">
+            <label>Item:</label>
+            <input type="text" id="item"><span id="itemError"></span><br>
+
+            <label>Price:</label>
+            <input type="text" id="price"><span id="priceError"></span><br>
+
+            <label>Quantity:</label>
+            <input type="text" id="quantity"><span id="quantityError"></span><br><br>
+
+            <input type="submit" id="add" value="Add Item"><br>
+        </form>
+        <br>
+
+        <h2>Transactions</h2>
+        <table id="table"></table>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

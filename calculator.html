@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<!-- Website template by freewebsitetemplates.com -->
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator - Saint Amour Consulting</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css">
+  <script>
+    var $ = function(id){
+      return document.getElementById(id);
+    }
+    var convert = function(){
+      var usin = $("USDIn").value;
+      var CADOut = $("CADOut");
+      var MEXOut = $("MEXOut");
+
+      CADOut.value = "";
+      MEXOut.value = "";
+
+			if(usin.startsWith("$")){
+				usin = usin.substring(1);
+			}
+
+
+      if(isNaN(usin) || usin === ""){
+        $("inputError").innerHTML = "*Please enter a valid number*";
+      }
+      else{
+        $("inputError").innerHTML = "";
+        CADOut.value = "$" + (parseFloat(usin) * 1.28).toFixed(2);
+        MEXOut.value = "$" + (parseFloat(usin) * 18.93).toFixed(2);
+      }
+    }
+  </script>
+</head>
+<body>
+	<div id="header">
+		<div class="clearfix">
+			<div class="logo">
+				<a href="index.html"><img src="images/logo3.png" height="104"></a>
+			</div>
+			<ul class="navigation">
+				<li>
+					<a href="index.html">Home</a>
+				</li>
+				<li>
+					<a href="about.html">About</a>
+				</li>
+				<li>
+					<a href="registration.html">Customer Registration</a>
+				</li>
+				<li>
+					<a href="calendar.html">Calendar</a>
+				</li>
+				<li>
+					<a href="products.html">Products</a>
+					<div>
+						<a href="order.html">Order Now!</a>
+					</div>
+				</li>
+				<li>
+					<a href="admin.html">Admin</a>
+				</li>
+				<li class="active">
+					<a href="calculator.html">Calculator</a>
+				</li>
+				<li>
+					<a href="references.html">References</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div id="contents">
+		<div class="clearfix">
+			<h1>Currency Calculator</h1>
+			<h2>Enter an amount in USD and click Convert to see the amount in Canadian Dollars and Mexican Pesos</h2><br><br>
+      <form id="form" onsubmit="return false">
+        USD: <input type="text" id="USDIn"><span id="inputError"></span><br>
+        <input type="submit" value="Submit" onclick="convert();" method="post">
+      </form>
+      <br><br>
+      <label>CAD: </label><output id="CADOut"></output><br>
+      <label>MEX: </label><output id="MEXOut"></output>
+		</div>
+	</div>
+</body>
+</html>
